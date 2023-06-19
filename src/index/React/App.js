@@ -3,19 +3,18 @@
 
 // ====== IMPORTS ======
 
-// React
 import React from 'react';
-import { Component }  from './components/Component.js';
 
+// Components
+import Header from './components/Header/Header';
 
 // ====== FUNCTIONS ======
 
 // Main app function 
 function App () {
     return (
-        <div>
-            <h1>Content goes here</h1>
-            <Component />
+        <div className='App'>
+            <Header />
         </div>
     );
 }
