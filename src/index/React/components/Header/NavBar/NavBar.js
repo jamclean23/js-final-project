@@ -16,6 +16,7 @@ import downArrow from '../../../../../assets/icons/downArrow.png';
 import './SearchBar/SearchBar.js';
 import SearchBar from './SearchBar/SearchBar.js';
 import SignInButton from "./SignInBtn/SignInBtn";
+import Cart from './Cart/Cart.js';
 
 //  ====== COMPONENT ======
 
@@ -35,7 +36,7 @@ function NavBar (props) {
             <SignInButton />
             <a className='navBtn accountBtn'><div className='accountBtnWrapper'><div><p>Hello, {props.name || 'Guest'}</p><p>Accounts & Lists</p></div><img className='downArrowImg' src={downArrow} /></div></a>
             <a className='navBtn returnsOrdersBtn'><div><p>Returns</p><p>& Orders</p></div></a>
-            <a className='navBtn cartBtn'>Cart</a>
+            <Cart />
         </div>
     );
 }
