@@ -3,8 +3,12 @@
 
 // ====== IMPORTS ======
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './accountbtn.css';
+
+// Components
+
+import AccountsModal from './AccountsModal/AccountsModal';
 
 // Images
 
@@ -14,20 +18,46 @@ import downArrow from '../../../../../../assets/icons/downArrow.png';
 
 function AccountBtn (props) {
 
+    // VARIABLES
+
+    const [shouldDisplayModal, setShouldDisplayModal] = useState(false);
+
+    // LISTENERS
+
+    useEffect(() => {
+        shouldDisplayModal
+            ? showModal()
+            : hideModal()
+    }, [shouldDisplayModal]);
+
     // FUNCTIONS
 
+    function showModal () {
+        const modal = document.querySelector('.AccountsModal');
+        modal.classList.add('active');
+        const triangle = document.querySelector('.AccountBtn > .triangle');
+        triangle.classList.add('active');
+    }
+
+    function hideModal () {
+        const modal = document.querySelector('.AccountsModal');
+        modal.classList.remove('active');
+        const triangle = document.querySelector('.AccountBtn > .triangle');
+        triangle.classList.remove('active');
+    }
+
     function handleMouseEnter () {
-        console.log('hovered');
+        setShouldDisplayModal(true);
     }
 
     function handleMouseLeave () {
-        console.log('left');
+        setShouldDisplayModal(false);
     }
 
     //  RENDER
 
     return (
-        <a className='navBtn accountBtn' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} >
+        <div className='navBtn AccountBtn' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} >
             <div className='accountBtnWrapper'>
                 <div>
                     <p>Hello, {props.name || 'Guest'}</p>
@@ -35,7 +65,9 @@ function AccountBtn (props) {
                 </div>
                 <img className='downArrowImg' src={downArrow} />
             </div>
-        </a>
+            <AccountsModal />
+            <div className='triangle'></div>
+        </div>
     )
 }
 

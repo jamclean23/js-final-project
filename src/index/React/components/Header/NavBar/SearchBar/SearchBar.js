@@ -19,8 +19,6 @@ function SearchBar (props) {
         // Calculate width of selected category name
         const selectedCatWidth = calculateTextWidth(selectedCat);
 
-        console.log(selectedCatWidth);
-
         // Set width of select box
         const select = document.querySelector('#searchBarCats');
         select.style.width = 'calc(' + selectedCatWidth + 'px + 2rem)';

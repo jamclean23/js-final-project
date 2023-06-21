@@ -1,5 +1,25 @@
 /* Stylesheet for AccountBtn */
+
+.AccountBtn {
+    position: relative;
+}
+
 .accountBtnWrapper {
     display: flex;
     gap: .4rem;
+}
+
+.AccountBtn > .triangle {
+    position: absolute;
+    border-left: 1rem solid transparent;
+    border-right: 1rem solid transparent;
+    border-top: 1rem solid transparent;
+    border-bottom: 1rem solid white;
+    right: -.1rem;
+    bottom: -.5rem;
+    display: none;
+}
+
+.AccountBtn > .triangle.active {
+    display: block;
 }

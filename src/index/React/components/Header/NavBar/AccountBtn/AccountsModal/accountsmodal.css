@@ -1,0 +1,47 @@
+/* Stylesheet for AccountsModal */
+
+.AccountsModal {
+    background-color: transparent;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 100%);
+    position: absolute;
+    display: none;
+    padding-inline: 1rem;
+    color: black;
+}
+
+.AccountsModal.active {
+    display: block;
+}
+
+.accountMenu {
+    background-color: white;
+    padding: 1rem;
+    padding-inline: 3rem;
+    border-radius: 4px;
+    box-shadow: 0 0 2px 0 black;
+}
+
+.accountMenu h1 {
+    font-size: 1.2rem;
+    border-bottom: 1px solid rgb(179, 179, 179);
+}
+
+.accountLinks {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.accountLinks > * {
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+    color: black;
+}
+
+.accountLinks > *:hover {
+    color: #f3a847;
+    cursor: pointer;
+}
+
