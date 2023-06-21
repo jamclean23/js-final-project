@@ -10,7 +10,7 @@ function SignInButton (props) {
 
     return (
         <div className='navBtn SignInBtn'>
-            Sign in
+            <span>Sign In</span>
         </div>
     );
 }
