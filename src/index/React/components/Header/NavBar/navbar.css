@@ -56,11 +56,6 @@
     width: 165%;
 }
 
-.accountBtnWrapper {
-    display: flex;
-    gap: .4rem;
-}
-
 .downArrowImg {
     width: .8rem;
     height: .8rem;
