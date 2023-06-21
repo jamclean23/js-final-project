@@ -14,7 +14,7 @@ import CatsBar from './CatsBar/CatsBar.js';
 function Header (props) {
     return (
         <header className='Header'>
-            <NavBar />
+            <NavBar address='placeholder' name='Guest'/>
             <CatsBar />
         </header>
     );

@@ -6,6 +6,11 @@
     display: flex;
     align-items: center;
     padding: .4rem;
+    gap: .5rem;
+}
+
+.NavBar > * {
+    flex-shrink: 0;
 }
 
 .navBtn {
@@ -22,4 +27,42 @@
 
 .navBtn:hover {
     border: 1px solid white;
+}
+
+.addressWrapper {
+    display: flex;
+    align-items: center;
+    gap: .2rem;
+}
+
+.addressBtn {
+    overflow: hidden;
+}
+
+.pinImg {
+    height: 1.3rem;
+    width: 1.5rem;
+}
+
+.logoBtn {
+    overflow: hidden;
+    width: 7rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logoImg {
+    width: 165%;
+}
+
+.accountBtnWrapper {
+    display: flex;
+    gap: .4rem;
+}
+
+.downArrowImg {
+    width: .8rem;
+    height: .8rem;
+    align-self: end;
 }
