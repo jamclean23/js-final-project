@@ -17,6 +17,7 @@ import SearchBar from './SearchBar/SearchBar.js';
 import SignInButton from "./SignInBtn/SignInBtn";
 import Cart from './Cart/Cart.js';
 import AccountBtn from "./AccountBtn/accountBtn";
+import OrdersButton from "./OrdersBtn/OrdersButton";
 
 //  ====== COMPONENT ======
 
@@ -35,7 +36,7 @@ function NavBar (props) {
             <SearchBar />
             <SignInButton />
             <AccountBtn />
-            <a className='navBtn returnsOrdersBtn'><div><p>Returns</p><p>& Orders</p></div></a>
+            <OrdersButton />
             <Cart />
         </div>
     );
