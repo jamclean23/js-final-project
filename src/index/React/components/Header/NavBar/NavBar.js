@@ -16,7 +16,7 @@ import './SearchBar/SearchBar.js';
 import SearchBar from './SearchBar/SearchBar.js';
 import SignInButton from "./SignInBtn/SignInBtn";
 import Cart from './Cart/Cart.js';
-import AccountBtn from "./AccountBtn/accountBtn";
+import AccountBtn from "./AccountBtn/AccountBtn";
 import OrdersButton from "./OrdersBtn/OrdersButton";
 
 //  ====== COMPONENT ======
