@@ -2,8 +2,12 @@
 
 // ====== IMPORTS ======
 
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import './navbar.css';
+
+// Firebase
+
+import { getAuth } from "firebase/auth";
 
 // Images
 
@@ -18,10 +22,21 @@ import SignInButton from "./SignInBtn/SignInBtn";
 import Cart from './Cart/Cart.js';
 import AccountBtn from "./AccountBtn/AccountBtn";
 import OrdersButton from "./OrdersBtn/OrdersButton";
+import { appContext } from "../../../App";
 
 //  ====== COMPONENT ======
 
 function NavBar (props) {
+
+    // VARIABLES
+
+    const signedIn = useContext(appContext).signedIn;
+
+    // FUNCTIONS
+
+    function handleTestClick () {
+        console.log(getAuth());
+    }
 
     // RENDER
 
@@ -33,10 +48,13 @@ function NavBar (props) {
                 : ''
             }
             <SearchBar />
-            <SignInButton />
-            <AccountBtn />
+            {signedIn
+                ? <AccountBtn />
+                : <SignInButton />
+            }
             <OrdersButton />
             <Cart />
+            <span className="navBtn testBtn" onClick={handleTestClick}>test</span>
         </div>
     );
 }

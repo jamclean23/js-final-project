@@ -2,12 +2,20 @@
 
 // ====== IMPORTS ======
 
-import React from "react";
+import React, { useContext } from "react";
 import './accountsmodal.css';
+import { appContext } from "../../../../../App";
 
 // ====== COMPONENT ======
 
 function AccountsModal (props) {
+
+    // VARIABLES
+
+    const userSignOut = useContext(appContext).userSignOut;
+
+    // RENDER
+
     return (
         <div className='AccountsModal' >
             <div className='accountMenu'>
@@ -17,7 +25,7 @@ function AccountsModal (props) {
                         <a href='' >Placeholder</a>
                         <a href='' >Placeholder</a>
                         <a href='' >Placeholder</a>
-                        <a href='' >Placeholder</a>
+                        <span onClick={userSignOut}>Sign Out</span>
                     </div>
                 </div>
             </div>
