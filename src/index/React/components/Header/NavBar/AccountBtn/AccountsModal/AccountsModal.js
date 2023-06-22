@@ -22,9 +22,6 @@ function AccountsModal (props) {
                 <div>
                     <h1>Your Account</h1>
                     <div className='accountLinks'>
-                        <a href='' >Placeholder</a>
-                        <a href='' >Placeholder</a>
-                        <a href='' >Placeholder</a>
                         <span onClick={userSignOut}>Sign Out</span>
                     </div>
                 </div>

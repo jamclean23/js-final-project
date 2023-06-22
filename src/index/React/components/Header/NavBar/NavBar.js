@@ -49,10 +49,11 @@ function NavBar (props) {
             }
             <SearchBar />
             {signedIn
-                ? <AccountBtn />
+                ? 
+                    <AccountBtn />
                 : <SignInButton />
             }
-            <OrdersButton />
+            {signedIn ? <OrdersButton /> : ''}
             <Cart />
             <span className="navBtn testBtn" onClick={handleTestClick}>test</span>
         </div>
