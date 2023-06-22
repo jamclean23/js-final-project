@@ -23,9 +23,8 @@ import OrdersButton from "./OrdersBtn/OrdersButton";
 
 function NavBar (props) {
 
-    // VARIABLES
-
     // RENDER
+
     return (
         <div className='NavBar'>
             <a className="navBtn logoBtn"><img className="logoImg" src={whamazonLogo}/></a>
