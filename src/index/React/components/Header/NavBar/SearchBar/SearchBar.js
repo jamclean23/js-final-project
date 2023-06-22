@@ -5,6 +5,10 @@
 import React, {useEffect, useState} from "react";
 import './searchbar.css';
 
+// Images
+
+import searchImg from '../../../../../../assets/icons/search.png';
+
 // ====== COMPONENT ======
 
 function SearchBar (props) {
@@ -48,7 +52,7 @@ function SearchBar (props) {
             </select>
             <input className='searchInput' type='text'/>
             <div className='searchBarOutline'></div>
-            <a className='searchBtn'><span className='searchIcon'>🔎︎</span></a>
+            <a className='searchBtn'><img className='searchIcon' src={searchImg} alt='searchImg'/></a>
         </div>
     );
 }

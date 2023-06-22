@@ -48,12 +48,10 @@
 }
 
 .searchIcon {
-    transform: scaleX(-1);
-    font-size: 1.8rem;
-    font-weight: 100;
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 50%;
 }
 
 .searchInput:focus + .searchBarOutline{
