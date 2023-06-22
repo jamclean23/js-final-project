@@ -15,12 +15,12 @@ function Header (props) {
 
     // VARABLES
     const testCats = {
-        cat1: 'google.com',
-        cat2: 'gmail.com',
-        cat3: 'amazon.com',
-        cat4: 'reddit.com',
-        cat5: 'w3schools.com',
-        cat6: 'fb.com'
+        Google: 'http://www.google.com',
+        Gmail: 'http://www.gmail.com',
+        Amazon: 'http://www.amazon.com',
+        Reddit: 'http://www.reddit.com',
+        W3Schools: 'http://www.w3schools.com',
+        Fb: 'http://www.fb.com'
     };
 
     // RENDER

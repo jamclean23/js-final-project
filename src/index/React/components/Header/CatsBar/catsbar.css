@@ -3,4 +3,19 @@
 .CatsBar {
     background-color: darkslategray;
     height: 2.45rem;
+    color: white;
+    display: flex;
+    align-items: center;
+}
+
+.catLink {
+    border: 1px solid transparent;
+    height: 100%;
+    padding: .5rem;
+    border-radius: 2px;
+}
+
+.catLink:hover {
+    border: 1px solid white;
+    box-shadow: 0 0 2px 0 black;
 }
