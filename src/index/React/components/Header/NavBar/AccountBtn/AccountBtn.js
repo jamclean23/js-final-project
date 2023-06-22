@@ -6,6 +6,10 @@
 import React, { useEffect, useState } from 'react';
 import './accountbtn.css';
 
+// Firebase
+
+import { getAuth } from 'firebase/auth';
+
 // Components
 
 import AccountsModal from './AccountsModal/AccountsModal';
@@ -60,7 +64,7 @@ function AccountBtn (props) {
         <div className='navBtn AccountBtn' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} >
             <div className='accountBtnWrapper'>
                 <div>
-                    <p>Hello, {props.name || 'Guest'}</p>
+                    <p>Hello, {getAuth().currentUser.displayName}</p>
                     <p>Accounts & Lists</p>
                 </div>
                 <img className='downArrowImg' src={downArrow} />
