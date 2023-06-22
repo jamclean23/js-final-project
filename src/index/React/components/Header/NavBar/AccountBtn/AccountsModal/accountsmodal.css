@@ -7,8 +7,10 @@
     transform: translate(-50%, 100%);
     position: absolute;
     display: none;
-    padding-inline: 1rem;
+    padding-inline: .3rem;
+    padding-bottom: .3rem;
     color: black;
+    z-index: 1;
 }
 
 .AccountsModal.active {

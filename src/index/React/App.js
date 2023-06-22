@@ -15,6 +15,7 @@ const firebaseApp = initializeApp(firebaseConfig);
 
 // Components
 import Header from './components/Header/Header';
+import HomeContent from './components/HomeContent/HomeContent';
 
 // ====== FUNCTIONS ======
 
@@ -59,6 +60,7 @@ function App () {
         <div className='App'>
             <appContext.Provider value={{ googleSignIn, userSignOut, signedIn }}>
                 <Header />
+                <HomeContent />
             </appContext.Provider>
         </div>
     );
