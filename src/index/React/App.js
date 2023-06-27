@@ -34,6 +34,12 @@ function App () {
         onAuthStateChanged(getAuth(), handleOnAuthStateChange);
     }, []);
 
+    useEffect(() => {
+        if (userData) {
+            console.log(userData);
+        }
+    }, [userData]);
+
     // FUNCTIONS
 
     function handleOnAuthStateChange (user) {
@@ -61,13 +67,13 @@ function App () {
             }
             setDoc(doc(firestoreDb, 'user-data', getAuth().currentUser.uid), data);
         } else {
-            console.log(docSnap.data());
+            setUserData(docSnap.data());
         }
     }
 
     async function googleSignIn () {
         const provider = new GoogleAuthProvider();
-        const result = await signInWithPopup(getAuth(), provider)
+        await signInWithPopup(getAuth(), provider)
     }
 
     async function userSignOut () {
