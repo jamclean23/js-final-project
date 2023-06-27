@@ -13,7 +13,7 @@ import { initializeApp } from 'firebase/app';
 import { firebaseConfig } from '../../../firebase-config';
 const firebaseApp = initializeApp(firebaseConfig);
 
-import { getFirestore, getDoc, setDoc, doc } from 'firebase/firestore';
+import { getFirestore, getDoc, setDoc, doc, collection, getDocs } from 'firebase/firestore';
 const firestoreDb = getFirestore(firebaseApp);
 
 // Components
@@ -35,8 +35,8 @@ function App () {
     }, []);
 
     useEffect(() => {
-        if (userData) {
-            console.log(userData);
+        if (Object.keys(userData).length) {
+            // console.log(userData);
         }
     }, [userData]);
 
@@ -62,12 +62,22 @@ function App () {
         const docSnap = await getDoc(doc(firestoreDb, 'user-data', getAuth().currentUser.uid));
         if (!docSnap.exists()) {
             console.log('Document not found, creating...');
-            const data = {
-                address: ''
-            }
-            setDoc(doc(firestoreDb, 'user-data', getAuth().currentUser.uid), data);
+            setDoc(doc(firestoreDb, 'user-data', getAuth().currentUser.uid), {});
+            setUserData({});
         } else {
-            setUserData(docSnap.data());
+
+            const addressesSnapshot = await getDocs(collection(firestoreDb, 'user-data', getAuth().currentUser.uid, 'addresses'));
+            let addresses = [];
+
+
+            addressesSnapshot.forEach((doc) => {
+                addresses.push(doc.data());
+            })
+
+            setUserData({
+                userData: docSnap.data(),
+                addresses: addresses
+            });
         }
     }
 
@@ -79,6 +89,7 @@ function App () {
     async function userSignOut () {
         try {
             signOut(getAuth());
+            setUserData({});
         } catch (error) {
             console.log(error);
         }
@@ -90,7 +101,7 @@ function App () {
 
     return (
         <div className='App'>
-            <appContext.Provider value={{ googleSignIn, userSignOut, signedIn }}>
+            <appContext.Provider value={{ googleSignIn, userSignOut, signedIn, userData }}>
                 <Header />
                 <HomeContent />
             </appContext.Provider>

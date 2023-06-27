@@ -2,8 +2,9 @@
 
 // ====== IMPORTS ======
 
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import './deliverybtn.css';
+import { appContext } from "../../../../App";
 
 // Images
 import pin from '../../../../../../assets/icons/pinWhite.png';
@@ -12,6 +13,19 @@ import pin from '../../../../../../assets/icons/pinWhite.png';
 
 function DeliveryBtn (props) {
     
+    // VARIABLES
+
+    const userData = useContext(appContext).userData;
+    const [currentAddress, setCurrentAddress] = useState();
+
+    // LISTENERS
+
+    useEffect(() => {
+        if (userData.addresses) {
+            setCurrentAddress(userData.addresses[0]);
+        }
+    }, [userData]);
+
     // RENDER 
 
     return (
@@ -19,8 +33,17 @@ function DeliveryBtn (props) {
             <div className='addressWrapper'>
                 <img className='pinImg' src={pin} alt='pin' />
                 <div>
-                    <p>Deliver to BLANK</p>
-                    <p>BLANK</p>
+                    {currentAddress
+                        ? 
+                            <>
+                                <p>Deliver to {currentAddress.firstName}</p>
+                                <p>{currentAddress.city} {currentAddress.zip}</p>
+                            </>
+                        :
+                            <>
+                                <p>Add delivery address</p>
+                            </>
+                    }
                 </div>
             </div>
         </a>
