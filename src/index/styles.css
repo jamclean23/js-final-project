@@ -9,3 +9,7 @@
 body {
     background-color: rgb(241, 237, 237);
 }
+
+.App {
+    min-width: fit-content;
+}
