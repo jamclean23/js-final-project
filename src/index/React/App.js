@@ -13,6 +13,9 @@ import { initializeApp } from 'firebase/app';
 import { firebaseConfig } from '../../../firebase-config';
 const firebaseApp = initializeApp(firebaseConfig);
 
+import { getFirestore, getDoc, setDoc, doc } from 'firebase/firestore';
+const firestoreDb = getFirestore(firebaseApp);
+
 // Components
 import Header from './components/Header/Header';
 import HomeContent from './components/HomeContent/HomeContent';
@@ -23,6 +26,7 @@ import HomeContent from './components/HomeContent/HomeContent';
 function App () {
 
     const [signedIn, setSignedIn] = useState(false);
+    const [userData, setUserData] = useState({});
 
     // LISTENERS
     
@@ -34,9 +38,31 @@ function App () {
 
     function handleOnAuthStateChange (user) {
         user
-            ? setSignedIn(true)
-            : setSignedIn(false)
+            ? handleUserSignIn()
+            : handleUserSignOut()
         ;
+
+        function handleUserSignIn () {
+            setSignedIn(true);
+            updateUserData();
+        }
+
+        function handleUserSignOut () {
+            setSignedIn(false);
+        }
+    }
+
+    async function updateUserData () {
+        const docSnap = await getDoc(doc(firestoreDb, 'user-data', getAuth().currentUser.uid));
+        if (!docSnap.exists()) {
+            console.log('Document not found, creating...');
+            const data = {
+                address: ''
+            }
+            setDoc(doc(firestoreDb, 'user-data', getAuth().currentUser.uid), data);
+        } else {
+            console.log(docSnap.data());
+        }
     }
 
     async function googleSignIn () {
