@@ -1,0 +1,29 @@
+/* Stylesheet for AddressesModal component */
+
+.AddressesModal {
+    position: fixed;
+    background-color: white;
+    border-radius: 4px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    left: 50%;
+    top: 4rem;
+    z-index: 2;
+    transform: translate(-50%);
+}
+
+.AddressesModal h1 {
+    font-size: 1.2rem;
+    color: black;
+}
+
+.modalWrapper {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 2;
+    background-color: rgba(0, 0 ,0, .3);
+}
