@@ -58,27 +58,30 @@ function App () {
         }
     }
 
-    async function updateUserData () {
-        const docSnap = await getDoc(doc(firestoreDb, 'user-data', getAuth().currentUser.uid));
-        if (!docSnap.exists()) {
-            console.log('Document not found, creating...');
-            setDoc(doc(firestoreDb, 'user-data', getAuth().currentUser.uid), {});
-            setUserData({});
-        } else {
+    function updateUserData () {
+        return new Promise(async (resolve, reject) => {
 
-            const addressesSnapshot = await getDocs(collection(firestoreDb, 'user-data', getAuth().currentUser.uid, 'addresses'));
-            let addresses = [];
-
-
-            addressesSnapshot.forEach((doc) => {
-                addresses.push(doc.data());
-            })
-
-            setUserData({
-                userData: docSnap.data(),
-                addresses: addresses
-            });
-        }
+            const docSnap = await getDoc(doc(firestoreDb, 'user-data', getAuth().currentUser.uid));
+            if (!docSnap.exists()) {
+                console.log('Document not found, creating...');
+                setDoc(doc(firestoreDb, 'user-data', getAuth().currentUser.uid), {});
+                setUserData({});
+            } else {
+                
+                const addressesSnapshot = await getDocs(collection(firestoreDb, 'user-data', getAuth().currentUser.uid, 'addresses'));
+                let addresses = [];
+                
+                
+                addressesSnapshot.forEach((doc) => {
+                    addresses.push(doc.data());
+                })
+                
+                setUserData({
+                    userData: docSnap.data(),
+                    addresses: addresses
+                });
+            }
+        });
     }
 
     async function googleSignIn () {
@@ -101,7 +104,7 @@ function App () {
 
     return (
         <div className='App'>
-            <appContext.Provider value={{ googleSignIn, userSignOut, signedIn, userData }}>
+            <appContext.Provider value={{ googleSignIn, userSignOut, signedIn, userData, updateUserData }}>
                 <Header />
                 <HomeContent />
             </appContext.Provider>

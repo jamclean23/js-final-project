@@ -30,10 +30,6 @@ function DeliveryBtn (props) {
         }
     }, [userData]);
 
-    useEffect(() => {
-        console.log(shouldDisplayModal);
-    }, [shouldDisplayModal]);
-
     // FUNCTIONS
 
     function handleDeliveryBtnClick () {
@@ -62,7 +58,7 @@ function DeliveryBtn (props) {
                     </div>
                 </div>
             </a>
-            
+
             { shouldDisplayModal 
                 ? <AddressesModal setShouldDisplay={setShouldDisplayModal} />
                 : ''
