@@ -15,6 +15,7 @@ function AddressesModal (props) {
     // VARIABLES
 
     const userData = useContext(appContext).userData;
+    const updateUserData = useContext(appContext).updateUserData;
     const renderCounter = useRef(0);
 
 
@@ -23,7 +24,7 @@ function AddressesModal (props) {
     useEffect(() => {
 
         // On mount
-        if (renderCounter.current = 0) {
+        if (renderCounter.current === 0) {
             getAddresses();
         }
 
@@ -32,8 +33,10 @@ function AddressesModal (props) {
 
     // FUNCTIONS
 
-    function getAddresses () {
-        userData.updateUserData();
+    async function getAddresses () {
+        console.log('getting addresses');
+        await updateUserData();
+        console.log(userData);
     }
 
     function handleDoneClick () {
