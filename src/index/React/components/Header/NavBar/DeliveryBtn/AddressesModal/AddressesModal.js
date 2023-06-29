@@ -66,17 +66,23 @@ function AddressesModal (props) {
         let addressesArray = [];
 
         userData.addresses.forEach((address) => {
-            addressesArray.push(<div className={address.default ? 'defaultAddress addressDiv' : 'addressDiv' } key={uniqid()}>
-                <h2>{address.firstName} {address.lastName}</h2>
-                <p>{address.streetAddress},</p>
-                <p>{address.city},</p>
-                <p>{address.state},</p>
-                <p>{address.zip}</p>
-                {address.default
-                    ? <p className='defaultAddressText'>Default address</p>
-                    : ''
-                }
-            </div>);
+            const content = <div className={address.default ? 'defaultAddress addressDiv' : 'addressDiv' } key={uniqid()}>
+            <h2>{address.firstName} {address.lastName}</h2>
+            <p>{address.streetAddress},</p>
+            <p>{address.city},</p>
+            <p>{address.state},</p>
+            <p>{address.zip}</p>
+            {address.default
+                ? <p className='defaultAddressText'>Default address</p>
+                : ''
+            }
+            </div>
+
+            if (address.default) {
+                addressesArray.unshift(content);
+            } else {
+                addressesArray.push(content);
+            }
         });
 
         setAddresses(addressesArray);
