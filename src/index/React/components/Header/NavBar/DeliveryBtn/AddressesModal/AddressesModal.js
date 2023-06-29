@@ -18,6 +18,7 @@ function AddressesModal (props) {
     const updateUserData = useContext(appContext).updateUserData;
     const renderCounter = useRef(0);
     const [addresses, setAddresses] = useState([]);
+    const [showAddAddress, setShowAddAddress] = useState(false);
 
 
     // LISTENERS
@@ -53,8 +54,12 @@ function AddressesModal (props) {
         setAddresses(addressesArray);
     }
 
-    function handleDoneClick () {
-        props.setShouldDisplay(false);
+    function handleDoneClick (event) {
+
+        if (event.target === document.querySelector('.modalWrapper') || event.target === document.querySelector('.AddressesModal .doneBtn')) {
+            props.setShouldDisplay(false);
+        } 
+
     }
 
     // RENDER
@@ -68,7 +73,7 @@ function AddressesModal (props) {
                 </div>
                 <div className='addressesBtnsWrapper'>
                     <button>Add an address</button>
-                    <button onClick={handleDoneClick}>Done</button>
+                    <button className='doneBtn' onClick={handleDoneClick}>Done</button>
                 </div>
             </div>
         </div>
