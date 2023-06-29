@@ -19,6 +19,7 @@ function AddressesModal (props) {
     const renderCounter = useRef(0);
     const [addresses, setAddresses] = useState([]);
     const [modalToDisplay, setModalToDisplay] = useState('chooseAddressModal');
+    const [retrieveAddresses, setRetrieveAddresses] = useState(false);
 
     // Variabes in state for adding an address
     const [addressFormInfo, setAddressFormInfo] = useState({
@@ -47,12 +48,20 @@ function AddressesModal (props) {
         console.log('ADDRESS FORM INFO', addressFormInfo);
     }, [addressFormInfo]);
 
+    useEffect(() => {
+        if (retrieveAddresses) {
+            buildAddressesJsx();
+        }
+    }, [userData]);
 
     // FUNCTIONS
 
     async function getAddressesJsx () {
         await updateUserData();
+        setRetrieveAddresses(true);
+    }
 
+    function buildAddressesJsx () {
         // Use address data from userData to build array of jsx, then set it to state
         let addressesArray = [];
 
@@ -70,7 +79,6 @@ function AddressesModal (props) {
     }
 
     function handleDoneClick (event) {
-
         if (event.target === document.querySelector('.modalWrapper') || event.target === document.querySelector('.AddressesModal .doneBtn')) {
             props.setShouldDisplay(false);
         } 
@@ -88,6 +96,10 @@ function AddressesModal (props) {
     }
 
     function handleAddAddressCancelBtnClick () {
+        setModalToDisplay('chooseAddressModal');
+    }
+
+    function handleAddAddressSubmitBtnClick () {
         setModalToDisplay('chooseAddressModal');
     }
 
@@ -143,7 +155,7 @@ function AddressesModal (props) {
                         </div>
                         <div className='addAddressBtnWrapper'>
                             <button onClick={handleAddAddressCancelBtnClick} >Cancel</button>
-                            <button>Submit</button>
+                            <button onClick={handleAddAddressSubmitBtnClick}>Submit</button>
                         </div>                                                                  
                     </div>
                 : ''
