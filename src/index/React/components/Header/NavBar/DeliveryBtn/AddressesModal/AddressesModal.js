@@ -44,9 +44,9 @@ function AddressesModal (props) {
         renderCounter.current = renderCounter.current + 1;
     }, []);
 
-    useEffect(() => {
-        console.log('ADDRESS FORM INFO', addressFormInfo);
-    }, [addressFormInfo]);
+    // useEffect(() => {
+    //     console.log('ADDRESS FORM INFO', addressFormInfo);
+    // }, [addressFormInfo]);
 
     useEffect(() => {
         if (retrieveAddresses) {
@@ -66,12 +66,16 @@ function AddressesModal (props) {
         let addressesArray = [];
 
         userData.addresses.forEach((address) => {
-            addressesArray.push(<div className='addressDiv' key={uniqid()}>
+            addressesArray.push(<div className={address.default ? 'defaultAddress addressDiv' : 'addressDiv' } key={uniqid()}>
                 <h2>{address.firstName} {address.lastName}</h2>
                 <p>{address.streetAddress},</p>
                 <p>{address.city},</p>
                 <p>{address.state},</p>
                 <p>{address.zip}</p>
+                {address.default
+                    ? <p className='defaultAddressText'>Default address</p>
+                    : ''
+                }
             </div>);
         });
 
