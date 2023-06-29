@@ -76,3 +76,9 @@
 .addresseBtnsWrapper button:active {
     border: 2px solid lightblue;
 }
+
+.addressesLoading {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}

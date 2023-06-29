@@ -69,7 +69,10 @@ function AddressesModal (props) {
             <div className='AddressesModal'>
                 <h1>Choose your location</h1>
                 <div className='addressesList'>
-                    {addresses}
+                    {addresses.length
+                        ? addresses
+                        : <span className='addressesLoading'>Loading...</span>
+                    }
                 </div>
                 <div className='addressesBtnsWrapper'>
                     <button>Add an address</button>
