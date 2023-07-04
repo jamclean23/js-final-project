@@ -73,7 +73,7 @@ function App () {
                 
                 
                 addressesSnapshot.forEach((doc) => {
-                    addresses.push(doc.data());
+                    addresses.push({...doc.data(), id: doc.id});
                 })
                 
                 setUserData({
@@ -116,5 +116,5 @@ function App () {
 // ====== EXPORTS ======
 
 export {
-    App, appContext
+    App, appContext, firestoreDb
 }

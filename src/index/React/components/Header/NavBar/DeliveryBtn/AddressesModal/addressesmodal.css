@@ -39,11 +39,20 @@
     border-radius: 4px;
     border: 1px solid black;
     padding: .5rem 2rem;
+    background-color: rgb(214, 231, 236);
+}
+
+.addressDiv:hover {
     background-color: white;
 }
 
 .addressDiv h2 {
     font-size: 1rem;
+}
+
+.addressDiv.defaultAddress {
+    background-color: white;
+    border: 1px solid blue;
 }
 
 .addressesList {

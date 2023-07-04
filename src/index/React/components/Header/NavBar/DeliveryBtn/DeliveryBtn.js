@@ -26,7 +26,15 @@ function DeliveryBtn (props) {
 
     useEffect(() => {
         if (userData.addresses) {
-            setCurrentAddress(userData.addresses[0]);
+            let defaultAddress = userData.addresses[0];
+
+            userData.addresses.forEach((address) => {
+                if (address.default) {
+                    defaultAddress = address;
+                }
+            });
+
+            setCurrentAddress(defaultAddress);
         }
     }, [userData]);
 
@@ -60,7 +68,7 @@ function DeliveryBtn (props) {
             </a>
 
             { shouldDisplayModal 
-                ? <AddressesModal setShouldDisplay={setShouldDisplayModal} />
+                ? <AddressesModal setCurrentAddress={setCurrentAddress} setShouldDisplay={setShouldDisplayModal} />
                 : ''
             }
         </>
