@@ -51,10 +51,8 @@ function AddressesModal (props) {
     }, []);
 
     useEffect(() => {
-        if (retrieveAddresses) {
-            buildAddressesJsx();
-        }
-    }, [userData]);
+        buildAddressesJsx();
+    }, [userData.addresses]);
 
     // FUNCTIONS
 
@@ -76,37 +74,41 @@ function AddressesModal (props) {
         } else {
             clicked = event.target.parentNode;
         }
-        console.log('Clicked Address Div: ', clicked);
-        console.log('Address Firestore Id: ', clicked.getAttribute('data-id'));
 
         // Reset the old default address
         await resetDefaults();
 
         // Set the clicked address to the new default
-        updateField(clicked.getAttribute('data-id'), 'default', true);
+        await updateField(clicked.getAttribute('data-id'), 'default', true);
+
+        // Update userdata
+        updateUserData();
 
         props.setShouldDisplay(false);
     }
 
-    async function updateField (docId, field, value) {
-        
-        if (!docId) {
-            console.error('Document id not provided');
-            return;
-        } else if (!field) {
-            console.error('Field not provided');
-        } else if (!value) {
-            console.error('Value not provided');
-        }
+    function updateField (docId, field, value) {
+        return new Promise(async (resolve, reject) => {
 
-        let docRef = doc(firestoreDb, 'user-data', getAuth().currentUser.uid, 'addresses', docId);
-
-        let docObj = {};
-        docObj[field] = value;
-
-        await updateDoc(docRef, docObj);
+            if (!docId) {
+                console.error('Document id not provided');
+                return;
+            } else if (!field) {
+                console.error('Field not provided');
+            } else if (!value) {
+                console.error('Value not provided');
+            }
+            
+            let docRef = doc(firestoreDb, 'user-data', getAuth().currentUser.uid, 'addresses', docId);
+            
+            let docObj = {};
+            docObj[field] = value;
+            
+            await updateDoc(docRef, docObj);
+            resolve();
+        });
     }
-
+        
     async function resetDefaults () {
         return new Promise(async (resolve, reject) => {
             
@@ -181,6 +183,9 @@ function AddressesModal (props) {
 
         // Upload information to firestore
         await addDoc(collection(firestoreDb, 'user-data', getAuth().currentUser.uid, 'addresses'), addressFormInfo);
+
+        // Sync userdata with firestore
+        updateUserData();
 
         // Go back to "choose address" modal
         setModalToDisplay('chooseAddressModal');
