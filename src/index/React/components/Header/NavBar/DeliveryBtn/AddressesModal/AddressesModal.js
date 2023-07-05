@@ -143,6 +143,9 @@ function AddressesModal (props) {
     }
 
     function buildAddressesJsx () {
+        if (!userData.addresses) {
+            return;
+        }
         // Use address data from userData to build array of jsx, then set it to state
         let addressesArray = [];
 
