@@ -9,7 +9,7 @@ import uniqid from 'uniqid';
 
 // Firebase
 
-import { addDoc, collection, doc, updateDoc, query, where, getDocs } from 'firebase/firestore';
+import { addDoc, collection, doc, updateDoc, query, where, getDocs, deleteDoc } from 'firebase/firestore';
 import { firestoreDb } from '../../../../../App';
 import { getAuth } from 'firebase/auth';
 
@@ -71,6 +71,9 @@ function AddressesModal (props) {
             clicked = event.target;
         } else if (event.target.classList.contains('firstName') || event.target.classList.contains('lastName')) {
             clicked = event.target.parentNode.parentNode;
+        } else if (event.target.classList.contains('xButton')) {
+            handleXButtonClick(event);
+            return;
         } else {
             clicked = event.target.parentNode;
         }
@@ -85,6 +88,14 @@ function AddressesModal (props) {
         updateUserData();
 
         props.setShouldDisplay(false);
+    }
+
+    async function handleXButtonClick (event) {
+        console.log('x clicked', event);
+        console.log('id:', event.target.parentNode.getAttribute('data-id'));
+        await deleteDoc(doc(firestoreDb, 'user-data', getAuth().currentUser.uid, 'addresses', event.target.parentNode.getAttribute('data-id')));
+        updateUserData();
+
     }
 
     function updateField (docId, field, value) {
@@ -136,17 +147,19 @@ function AddressesModal (props) {
         let addressesArray = [];
 
         userData.addresses.forEach((address) => {
-            const content = <div data-id={address.id} onClick={handleAddressDivClick} className={address.default ? 'defaultAddress addressDiv' : 'addressDiv' } key={uniqid()}>
-            <h2><span className='firstName'>{address.firstName}</span> <span className='lastName'>{address.lastName}</span></h2>
-            <p className='streetAddress'>{address.streetAddress},</p>
-            <p className='city'>{address.city},</p>
-            <p className='state'>{address.state},</p>
-            <p className='zip'>{address.zip}</p>
-            {address.default
-                ? <p className='defaultAddressText'>Default address</p>
-                : ''
-            }
-            </div>
+            const content = 
+                <div data-id={address.id} onClick={handleAddressDivClick} className={address.default ? 'defaultAddress addressDiv' : 'addressDiv' } key={uniqid()}>
+                    <button className='xButton' >X</button>
+                    <h2><span className='firstName'>{address.firstName}</span> <span className='lastName'>{address.lastName}</span></h2>
+                    <p className='streetAddress'>{address.streetAddress},</p>
+                    <p className='city'>{address.city},</p>
+                    <p className='state'>{address.state},</p>
+                    <p className='zip'>{address.zip}</p>
+                    {address.default
+                        ? <p className='defaultAddressText'>Default address</p>
+                        : ''
+                    }
+                </div>
 
             if (address.default) {
                 addressesArray.unshift(content);
