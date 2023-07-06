@@ -6,6 +6,13 @@
 // React
 import React, { createContext, useEffect, useState } from 'react';
 const appContext = createContext();
+import {
+    BrowserRouter,
+    Routes,
+    Route,
+    Link,
+    HashRouter
+} from 'react-router-dom';
 
 // Firebase
 import { GoogleAuthProvider, getAuth, signInWithPopup, onAuthStateChanged, signOut } from 'firebase/auth';
@@ -19,6 +26,7 @@ const firestoreDb = getFirestore(firebaseApp);
 // Components
 import Header from './components/Header/Header';
 import HomeContent from './components/HomeContent/HomeContent';
+import TestComponent from './components/TestComponent/TestComponent';
 
 // ====== FUNCTIONS ======
 
@@ -29,7 +37,7 @@ function App () {
     const [userData, setUserData] = useState({});
 
     // LISTENERS
-    
+
     useEffect(() => {
         onAuthStateChanged(getAuth(), handleOnAuthStateChange);
     }, []);
@@ -106,8 +114,13 @@ function App () {
     return (
         <div className='App'>
             <appContext.Provider value={{ googleSignIn, userSignOut, signedIn, userData, updateUserData }}>
-                <Header />
-                <HomeContent />
+                <HashRouter>
+                    <Header />
+                    <Routes>
+                        <Route path='/' element={<HomeContent />}/>
+                        <Route path='/test' element={<TestComponent/>}/>
+                    </Routes>
+                </HashRouter>
             </appContext.Provider>
         </div>
     );
