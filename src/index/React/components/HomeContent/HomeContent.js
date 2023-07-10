@@ -10,6 +10,7 @@ import './homecontent.css';
 
 // Components
 import ProductDiv from "./ProductDiv/ProductDiv";
+import ProductCarousel from "./ProductCarousel/ProductCarousel.js";
 
 // Functions
 import getPrintifyObject from "../../../../functions/getPrintifyObject";
@@ -59,7 +60,7 @@ function HomeContent (props) {
     return (
         <div className='HomeContent'>
             <div className='homeContentWrapper'>
-                {productsJsx}
+                <ProductCarousel products={productsJsx} />
                 <div className='gradientBackground'></div>
             </div>
         </div>

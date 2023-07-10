@@ -12,6 +12,7 @@ body {
 
 .App {
     min-width: fit-content;
+    overflow: hidden;
 }
 
 button {

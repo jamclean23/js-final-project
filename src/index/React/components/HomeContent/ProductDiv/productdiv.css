@@ -2,9 +2,13 @@
 
 .ProductDiv {
     overflow: hidden;
+    height: 15rem;
+    width: 15rem;
+    flex-shrink: 0;
 }
 
 .ProductDiv img {
-    height: 80%;
-    width: 80%;
+    height: 100%;
+    width: 100%;
 }
+
