@@ -3,7 +3,7 @@
 // ====== IMPORTS =======
 
 // React
-import React from "react";
+import React, { useEffect } from "react";
 
 // Css
 import './productdiv.css';
@@ -13,10 +13,12 @@ import './productdiv.css';
 
 function ProductDiv (props) {
 
+    // LISTENERS
+
     // FUNCTIONS
 
     function handleProductDivClick () {
-        window.location.href = window.location.href + '#/test';
+        window.location.href = window.location.href + '#/product/' + props.productData.id;
     }
 
     // RENDER

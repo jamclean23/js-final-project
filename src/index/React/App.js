@@ -27,6 +27,7 @@ const firestoreDb = getFirestore(firebaseApp);
 import Header from './components/Header/Header';
 import HomeContent from './components/HomeContent/HomeContent';
 import TestComponent from './components/TestComponent/TestComponent';
+import ProductPage from './ProductPage/ProductPage';
 
 // ====== FUNCTIONS ======
 
@@ -119,6 +120,7 @@ function App () {
                     <Routes>
                         <Route path='/' element={<HomeContent />}/>
                         <Route path='/test' element={<TestComponent/>}/>
+                        <Route path='product/:id' element={<ProductPage/>} />
                     </Routes>
                 </HashRouter>
             </appContext.Provider>

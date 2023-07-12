@@ -1,0 +1,37 @@
+/* Stylesheet for ProductPage component */
+
+.manuDetailsWrapper {
+    display: flex;
+    width: 100%;
+    height: 50rem;
+}
+
+.productWrapper {
+    display: flex;
+    width: 100%;
+    height: 100rem;
+    background-color: white;
+}
+
+.ProductPage .leftColumn {
+    width: 35%;
+    height: 30rem;
+    top: 0;
+    position: sticky;
+}
+
+.ProductPage .rightColumn {
+    background-color: blue;
+    width: 65%;
+    display: flex;
+}
+
+.ProductPage .rightColumn > * {
+    flex: 1;
+    
+}
+
+.ProductPage .productImg {
+    width: 100%;
+    object-fit: contain;
+}
