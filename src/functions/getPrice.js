@@ -5,7 +5,7 @@ function getPrice (productObj) {
         let displayPrice = '$' + productObj.variants[0].price.toString().slice(0, -2) + '.' + productObj.variants[0].price.toString().slice(-2);
         return displayPrice;
     } else {
-        return 'No price given';
+        return '';
     }
 
 }
