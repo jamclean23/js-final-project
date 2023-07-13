@@ -38,11 +38,18 @@ function NavBar (props) {
         console.log(getAuth());
     }
 
+    function handleLogoClick () {
+        let currentLocation = window.location.href.split('#');
+
+        window.location.href = currentLocation[0] + '#/';
+
+    }
+
     // RENDER
 
     return (
         <div className='NavBar'>
-            <a className="navBtn logoBtn"><img className="logoImg" src={whamazonLogo}/></a>
+            <a className="navBtn logoBtn"><img className="logoImg" src={whamazonLogo} onClick={handleLogoClick} /></a>
             {signedIn
                 ? <DeliveryBtn />
                 : ''
