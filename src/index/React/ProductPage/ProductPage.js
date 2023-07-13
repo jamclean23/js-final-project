@@ -13,6 +13,7 @@ import './productpage.css';
 import getPrintifyProductObj from "../../../functions/getPrintifyProductObj";
 import getPrice from "../../../functions/getPrice";
 import parsePrintifyDescription from "../../../functions/parsePrintifyDescription";
+import uniqid from 'uniqid';
 
 // ====== COMPONENT ======
 
@@ -70,9 +71,14 @@ function ProductPage (props) {
                         <div className='selectWrapper'>
                             <label htmlFor='quantity'>Qty: </label>
                             <select name='quantity' className='quantity'>
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
+                                {(() => {
+                                    let selectArray = []
+
+                                    for(let i = 0; i < 20; i++) {
+                                        selectArray.push(<option key={uniqid()}>{i + 1}</option>)
+                                    }
+                                    return selectArray;
+                                })()}
                             </select>
                         </div>
                         <div className='btnWrapper'>
