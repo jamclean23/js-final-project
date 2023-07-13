@@ -11,6 +11,7 @@ import './productpage.css';
 
 // FUNCTIONS
 import getPrintifyProductObj from "../../../functions/getPrintifyProductObj";
+import getPrice from "../../../functions/getPrice";
 
 // ====== COMPONENT ======
 
@@ -46,7 +47,10 @@ function ProductPage (props) {
                     {productImg}
                 </div>
                 <div className="rightColumn">
-                    <div className='description'>Description</div>
+                    <div className='description'>
+                        <h2 className='title'>{productData.title}</h2>
+                        <div className='price'>{getPrice(productData)}</div>
+                    </div>
                     <div className='info'>Info</div>
                 </div>
             </div>
