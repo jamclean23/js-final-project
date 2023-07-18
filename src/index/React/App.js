@@ -67,6 +67,97 @@ function App () {
         }
     }
 
+    function addToLocalCart (itemId, quantity = 1) {
+
+        console.log(`Adding item: ${itemId} to localCart. Quantity: ${quantity}.`);
+
+        let cart = JSON.parse(localStorage.getItem("cart"));
+
+        if (cart) {
+
+            let itemFound = false;
+
+            cart.forEach((item) => {
+                if (item.itemId === itemId) {
+                    item.quantity = +item.quantity + +quantity;
+                    itemFound = true;
+                }
+            });
+
+            if (!itemFound) {
+                cart.push({ itemId, quantity });
+            }
+
+            localStorage.setItem("cart", JSON.stringify(cart));
+
+        } else {
+            localStorage.setItem("cart", JSON.stringify([{ itemId, quantity }]));
+        }
+
+        console.log(localStorage.getItem("cart"));
+    }
+
+    function changeQuantityLocalCart (itemId, newQuantity) {
+        `Changing quantity of item: ${itemId} to ${newQuantity}`
+
+        let cart = JSON.parse(localStorage.getItem("cart"));
+
+        if (!cart) {
+            return;
+        }
+
+        cart.forEach((item) => {
+            if (item.itemId === itemId) {
+                item.quantity = newQuantity;
+            }
+        });
+
+        localStorage.setItem("cart", JSON.stringify(cart));
+    }
+
+    function removeFromLocalCart (itemId) {
+        console.log(`Removing all items of type: ${itemId} from localCart.`);
+
+        let cart = JSON.parse(localStorage.getItem("cart"));
+
+        if (!cart) {
+            return;
+        }
+
+        let itemIndex;
+
+        cart.forEach((item, index) => {
+            if (item.itemId === itemId) {
+                itemIndex = index;
+            }
+        });
+
+        cart.splice(itemIndex, 1);
+
+        localStorage.setItem("cart", JSON.stringify(cart));
+    }
+
+    function clearLocalCart () {
+        console.log(`Clearing localCart.`);
+        localStorage.setItem("cart", null);
+    }
+
+    async function addToFirestoreCart (itemId, quantity) {
+
+    }
+
+    async function removeFromFirestoreCart () {
+
+    }
+
+    async function clearFirestoreCart () {
+
+    }
+
+    async function changeQuantityFirestoreCart () {
+
+    }
+
     function updateUserData () {
         return new Promise(async (resolve, reject) => {
 
@@ -114,7 +205,21 @@ function App () {
 
     return (
         <div className='App'>
-            <appContext.Provider value={{ googleSignIn, userSignOut, signedIn, userData, updateUserData }}>
+            <appContext.Provider value={{
+                    googleSignIn,
+                    userSignOut,
+                    signedIn,
+                    userData,
+                    updateUserData,
+                    addToLocalCart,
+                    removeFromLocalCart,
+                    clearLocalCart,
+                    changeQuantityLocalCart,
+                    addToFirestoreCart,
+                    removeFromFirestoreCart,
+                    clearFirestoreCart,
+                    changeQuantityFirestoreCart
+                }}>
                 <HashRouter>
                     <Header />
                     <Routes>

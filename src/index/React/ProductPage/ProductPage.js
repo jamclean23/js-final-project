@@ -3,11 +3,15 @@
 // ====== IMPORTS ======
 
 // React 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
+import { appContext } from "../App";
 
 // CSS
 import './productpage.css';
+
+// Firebase
+import { getAuth } from 'firebase/auth';
 
 // FUNCTIONS
 import getPrintifyProductObj from "../../../functions/getPrintifyProductObj";
@@ -25,6 +29,8 @@ function ProductPage (props) {
     const [productData, setProductData] = useState('');
     const [productImg, setProductImg] = useState('');
     const [productDescription, setProductDescription] = useState([]);
+    const appLevel = useContext(appContext);
+    const [quantity, setQuantity] = useState(1);
 
     // LISTENERS
 
@@ -46,6 +52,18 @@ function ProductPage (props) {
         setProductData(results);
         setProductImg(<img className='productImg' src={results.images[0].src} />);
     }
+
+    async function handleAddToCartClick () {
+        if (getAuth().currentUser) {
+        } else {
+            appLevel.addToLocalCart(productData.id, quantity);
+        }
+    }
+
+    function handleQuantityChange (event) {
+        setQuantity(event.target.value);
+    }
+
 
     // RENDER
 
@@ -70,7 +88,7 @@ function ProductPage (props) {
                         <div>In Stock</div>
                         <div className='selectWrapper'>
                             <label htmlFor='quantity'>Qty: </label>
-                            <select name='quantity' className='quantity'>
+                            <select onChange={handleQuantityChange} name='quantity' className='quantity' value={quantity}>
                                 {(() => {
                                     let selectArray = []
 
@@ -82,7 +100,7 @@ function ProductPage (props) {
                             </select>
                         </div>
                         <div className='btnWrapper'>
-                            <button className='addToCartBtn'>Add to Cart</button>
+                            <button onClick={handleAddToCartClick} className='addToCartBtn'>Add to Cart</button>
                         </div>
                     </div>
                 </div>

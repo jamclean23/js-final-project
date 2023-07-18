@@ -31,11 +31,14 @@ function NavBar (props) {
     // VARIABLES
 
     const signedIn = useContext(appContext).signedIn;
+    const appLevel = useContext(appContext);
 
     // FUNCTIONS
 
     function handleTestClick () {
-        console.log(getAuth());
+        appLevel.changeQuantityLocalCart('644c08b0d8dde61e1700cc38', 5);
+        console.log(localStorage.getItem("cart"));
+        appLevel.clearLocalCart();
     }
 
     function handleLogoClick () {
@@ -62,7 +65,7 @@ function NavBar (props) {
             }
             {signedIn ? <OrdersButton /> : ''}
             <Cart />
-            {/* <span className="navBtn testBtn" onClick={handleTestClick}>test</span> */}
+            <span className="navBtn testBtn" onClick={handleTestClick}>test</span>
         </div>
     );
 }
