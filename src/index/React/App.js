@@ -20,7 +20,7 @@ import { initializeApp } from 'firebase/app';
 import { firebaseConfig } from '../../../firebase-config';
 const firebaseApp = initializeApp(firebaseConfig);
 
-import { getFirestore, getDoc, setDoc, doc, collection, getDocs } from 'firebase/firestore';
+import { getFirestore, getDoc, setDoc, doc, collection, getDocs, updateDoc, deleteDoc } from 'firebase/firestore';
 const firestoreDb = getFirestore(firebaseApp);
 
 // Components
@@ -143,19 +143,46 @@ function App () {
     }
 
     async function addToFirestoreCart (itemId, quantity) {
-
+        const docRef = doc(firestoreDb, "user-data", getAuth().currentUser.uid, "cart", itemId)
+        const querySnap = await getDoc(docRef);
+        
+        if (querySnap.data()) {
+            updateDoc(docRef, {
+                quantity: +querySnap.data().quantity + +quantity,
+            })
+        } else {
+            await setDoc(docRef, {
+                "itemId": itemId,
+                "quantity": quantity
+            });
+        }
     }
 
-    async function removeFromFirestoreCart () {
+    async function removeFromFirestoreCart (itemId) {
+        const docRef = doc(firestoreDb, "user-data", getAuth().currentUser.uid, "cart", itemId);
 
+        await deleteDoc(docRef);
     }
 
     async function clearFirestoreCart () {
+        const querySnap = await getDocs(collection(firestoreDb, 'user-data', getAuth().currentUser.uid, 'cart'));
 
+        querySnap.forEach((currentDoc) => {
+            deleteDoc(doc(firestoreDb, "user-data", getAuth().currentUser.uid, "cart", currentDoc.id));
+        });
     }
 
-    async function changeQuantityFirestoreCart () {
+    async function changeQuantityFirestoreCart (itemId, newQuantity) {
+        const docRef = doc(firestoreDb, "user-data", getAuth().currentUser.uid, "cart", itemId);
+        const querySnap = await getDoc(docRef);
 
+        if (querySnap.empty) {
+            return;
+        }
+
+        await updateDoc(docRef, {
+            quantity: newQuantity
+        })
     }
 
     function updateUserData () {

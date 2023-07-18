@@ -36,9 +36,7 @@ function NavBar (props) {
     // FUNCTIONS
 
     function handleTestClick () {
-        appLevel.changeQuantityLocalCart('644c08b0d8dde61e1700cc38', 5);
-        console.log(localStorage.getItem("cart"));
-        appLevel.clearLocalCart();
+        appLevel.removeFromFirestoreCart('645135548bf3be56ba0f8ee2');
     }
 
     function handleLogoClick () {

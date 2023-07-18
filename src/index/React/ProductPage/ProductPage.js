@@ -55,6 +55,7 @@ function ProductPage (props) {
 
     async function handleAddToCartClick () {
         if (getAuth().currentUser) {
+            appLevel.addToFirestoreCart(productData.id, quantity);
         } else {
             appLevel.addToLocalCart(productData.id, quantity);
         }
