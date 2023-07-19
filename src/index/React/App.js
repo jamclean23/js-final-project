@@ -27,7 +27,8 @@ const firestoreDb = getFirestore(firebaseApp);
 import Header from './components/Header/Header';
 import HomeContent from './components/HomeContent/HomeContent';
 import TestComponent from './components/TestComponent/TestComponent';
-import ProductPage from './ProductPage/ProductPage';
+import ProductPage from './components/ProductPage/ProductPage';
+import CartPage from './components/CartPage/CartPage';
 
 // ====== FUNCTIONS ======
 
@@ -83,7 +84,6 @@ function App () {
         }
 
         if (cart === null) {
-            console.log('cart is null');
             setCount(0);
             return;
         }
@@ -91,8 +91,6 @@ function App () {
         let cartCount = cart.reduce((accumulator, item) => {
             return accumulator + +item.quantity;
         }, 0);
-
-        console.log(cartCount);
 
         setCount(cartCount);
     }
@@ -281,7 +279,37 @@ function App () {
         }
     }
 
+    function getLocalCartArray () {
+        let cart = localStorage.getItem('cart');
 
+        if (!cart) {
+            return [];
+        }
+
+        return JSON.parse(cart);
+    }
+
+    async function getFirestoreCartArray () {
+        let cart = await getDocs(collection(firestoreDb, 'user-data', getAuth().currentUser.uid, 'cart'));
+
+        if (cart.empty) {
+            return [];
+        }
+
+        let cartArray =[];
+
+        cart.forEach((item) => {
+            cartArray.push(item.data());
+        });
+
+        return cartArray;
+    }
+
+    function goToHashUrl (routeName) {
+        let currentLocation = window.location.href.split('#');
+
+        window.location.href = currentLocation[0] + '#/' + routeName;
+    }
 
     // RENDER
 
@@ -297,10 +325,13 @@ function App () {
                     removeFromLocalCart,
                     clearLocalCart,
                     changeQuantityLocalCart,
+                    getLocalCartArray,
                     addToFirestoreCart,
                     removeFromFirestoreCart,
                     clearFirestoreCart,
                     changeQuantityFirestoreCart,
+                    getFirestoreCartArray,
+                    goToHashUrl,
                     count
                 }}>
                 <HashRouter>
@@ -309,6 +340,7 @@ function App () {
                         <Route path='/' element={<HomeContent />}/>
                         <Route path='/test' element={<TestComponent/>}/>
                         <Route path='product/:id' element={<ProductPage/>} />
+                        <Route path='cart' element={<CartPage/>} />
                     </Routes>
                 </HashRouter>
             </appContext.Provider>

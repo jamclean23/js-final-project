@@ -19,11 +19,18 @@ function Cart (props) {
     // VARIABLES
 
     const cartCount = useContext(appContext).count;
+    const AppLevel = useContext(appContext);
+
+    // FUNCTIONS
+
+    function handleCartClick () {
+        AppLevel.goToHashUrl('cart');
+    }
 
     // RENDER
 
     return (
-        <a className='navBtn cartBtn'>
+        <a className='navBtn cartBtn' onClick={handleCartClick}>
             <div className='cartWrapper'>
                 <img className='cartImg' src={cart} alt='cart'/>
                 <span className='cartText'>Cart</span>

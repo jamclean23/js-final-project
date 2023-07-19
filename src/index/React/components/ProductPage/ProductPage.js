@@ -5,7 +5,7 @@
 // React 
 import React, { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
-import { appContext } from "../App";
+import { appContext } from "../../App";
 
 // CSS
 import './productpage.css';
@@ -14,9 +14,9 @@ import './productpage.css';
 import { getAuth } from 'firebase/auth';
 
 // FUNCTIONS
-import getPrintifyProductObj from "../../../functions/getPrintifyProductObj";
-import getPrice from "../../../functions/getPrice";
-import parsePrintifyDescription from "../../../functions/parsePrintifyDescription";
+import getPrintifyProductObj from "../../../../functions/getPrintifyProductObj";
+import getPrice from "../../../../functions/getPrice";
+import parsePrintifyDescription from "../../../../functions/parsePrintifyDescription";
 import uniqid from 'uniqid';
 
 // ====== COMPONENT ======

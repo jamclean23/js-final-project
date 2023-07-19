@@ -31,19 +31,16 @@ function NavBar (props) {
     // VARIABLES
 
     const signedIn = useContext(appContext).signedIn;
-    const appLevel = useContext(appContext);
+    const AppLevel = useContext(appContext);
 
     // FUNCTIONS
 
     function handleTestClick () {
-        appLevel.clearLocalCart(); 
+        AppLevel.clearLocalCart(); 
     }
 
     function handleLogoClick () {
-        let currentLocation = window.location.href.split('#');
-
-        window.location.href = currentLocation[0] + '#/';
-
+        AppLevel.goToHashUrl('');
     }
 
     // RENDER
