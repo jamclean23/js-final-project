@@ -6,8 +6,8 @@
 import React, { useState, useContext, useEffect, useRef } from 'react';
 
 // Firebase
-import { appContext, firestoreDb } from '../../App';
-import { getAuth } from 'firebase/auth';
+import { appContext} from '../../App';
+import { getAuth, onAuthStateChanged} from 'firebase/auth';
 
 // CSS
 import './cartpage.css';
@@ -31,6 +31,8 @@ function CartPage () {
         if (renderCounter.current === 0) {
             buildCartItems();
         }
+        
+        onAuthStateChanged(getAuth(), buildCartItems);
 
         renderCounter.current = renderCounter.current + 1;
     }, []);
@@ -41,13 +43,26 @@ function CartPage () {
         let cartItemsArray = [];
 
         if (getAuth().currentUser) {
-            cartItemsArray = AppLevel.getFirestoreCartArray();
+            console.log('Using firestore cart');
+            cartItemsArray = await AppLevel.getFirestoreCartArray();
+            console.log('CART ITEMS ARRAY', cartItemsArray);
         } else {
             cartItemsArray = AppLevel.getLocalCartArray();
         }
 
-        console.log('CART', cartItemsArray);
+        let cartItemsJsx = [];
+        cartItemsArray.forEach((item) => {
+            cartItemsJsx.push(
+                <div key={uniqid()} className='cartPageItem'>
+                    <p>Item</p>
+                    <p>{item.itemId}</p>                    
+                    <p>{item.quantity}</p>
+                </div>);
+        });
 
+        console.log('CartItems:', cartItemsJsx);
+
+        setCartItems(cartItemsJsx);
     }
 
     // RENDER
