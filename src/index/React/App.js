@@ -36,18 +36,13 @@ function App () {
 
     const [signedIn, setSignedIn] = useState(false);
     const [userData, setUserData] = useState({});
+    const [count, setCount] = useState(0);
 
     // LISTENERS
 
     useEffect(() => {
         onAuthStateChanged(getAuth(), handleOnAuthStateChange);
     }, []);
-
-    useEffect(() => {
-        if (Object.keys(userData).length) {
-            // console.log(userData);
-        }
-    }, [userData]);
 
     // FUNCTIONS
 
@@ -61,19 +56,52 @@ function App () {
             setSignedIn(true);
             combineCarts();
             updateUserData();
+            updateCartBtn();
         }
 
         function handleUserSignOut () {
             setSignedIn(false);
+            updateCartBtn();
         }
     }
 
-    function combineCarts () {
-        console.log('Combining carts');
-        
-        const cart = JSON.parse(localStorage.getItem('cart'));
+    async function updateCartBtn () {
+        let cart = [];
 
+
+        if (getAuth().currentUser) {
+            let cartQuery = await getDocs(collection(firestoreDb, 'user-data', getAuth().currentUser.uid, 'cart'));
+            
+            cartQuery.forEach((item) => {
+                cart.push(item.data());
+            });
+          } else {
+            let cartString = localStorage.getItem('cart');
+            if (cartString) {
+                cart = JSON.parse(localStorage.getItem('cart'));
+            }
+        }
+
+        if (cart === null) {
+            console.log('cart is null');
+            setCount(0);
+            return;
+        }
+
+        let cartCount = cart.reduce((accumulator, item) => {
+            return accumulator + +item.quantity;
+        }, 0);
+
+        console.log(cartCount);
+
+        setCount(cartCount);
+    }
+
+    function combineCarts () {
+        let cart = localStorage.getItem('cart');
+        
         if (cart) {   
+            cart = JSON.parse(localStorage.getItem('cart'));
             cart.forEach(async (item) => {
                 await addToFirestoreCart(item.itemId, item.quantity);
             });
@@ -83,10 +111,12 @@ function App () {
     }
 
     function addToLocalCart (itemId, quantity = 1) {
+        let cart = [];
 
-        console.log(`Adding item: ${itemId} to localCart. Quantity: ${quantity}.`);
-
-        let cart = JSON.parse(localStorage.getItem("cart"));
+        let cartString = localStorage.getItem('cart');
+        if (cartString) {
+            cart = JSON.parse(cartString);
+        }
 
         if (cart) {
 
@@ -109,7 +139,7 @@ function App () {
             localStorage.setItem("cart", JSON.stringify([{ itemId, quantity }]));
         }
 
-        console.log(localStorage.getItem("cart"));
+        updateCartBtn();
     }
 
     function changeQuantityLocalCart (itemId, newQuantity) {
@@ -128,11 +158,10 @@ function App () {
         });
 
         localStorage.setItem("cart", JSON.stringify(cart));
+        updateCartBtn();
     }
 
     function removeFromLocalCart (itemId) {
-        console.log(`Removing all items of type: ${itemId} from localCart.`);
-
         let cart = JSON.parse(localStorage.getItem("cart"));
 
         if (!cart) {
@@ -150,11 +179,12 @@ function App () {
         cart.splice(itemIndex, 1);
 
         localStorage.setItem("cart", JSON.stringify(cart));
+        updateCartBtn();
     }
 
     function clearLocalCart () {
-        console.log(`Clearing localCart.`);
-        localStorage.setItem("cart", null);
+        localStorage.setItem("cart", '');
+        updateCartBtn();
     }
 
     async function addToFirestoreCart (itemId, quantity) {
@@ -171,20 +201,24 @@ function App () {
                 "quantity": quantity
             });
         }
+        updateCartBtn();
     }
 
     async function removeFromFirestoreCart (itemId) {
         const docRef = doc(firestoreDb, "user-data", getAuth().currentUser.uid, "cart", itemId);
 
         await deleteDoc(docRef);
+        updateCartBtn();
     }
 
     async function clearFirestoreCart () {
         const querySnap = await getDocs(collection(firestoreDb, 'user-data', getAuth().currentUser.uid, 'cart'));
 
-        querySnap.forEach((currentDoc) => {
-            deleteDoc(doc(firestoreDb, "user-data", getAuth().currentUser.uid, "cart", currentDoc.id));
+        querySnap.forEach(async (currentDoc) => {
+            await deleteDoc(doc(firestoreDb, "user-data", getAuth().currentUser.uid, "cart", currentDoc.id));
         });
+
+        updateCartBtn();
     }
 
     async function changeQuantityFirestoreCart (itemId, newQuantity) {
@@ -198,6 +232,8 @@ function App () {
         await updateDoc(docRef, {
             quantity: newQuantity
         })
+
+        updateCartBtn();
     }
 
     function updateUserData () {
@@ -207,7 +243,6 @@ function App () {
 
             if (!docSnap.exists()) {
                 // If user has not signed in before, create new firestore doc
-                console.log('Document not found, creating...');
                 setDoc(doc(firestoreDb, 'user-data', getAuth().currentUser.uid), {});
                 setUserData({});
             } else {
@@ -265,7 +300,8 @@ function App () {
                     addToFirestoreCart,
                     removeFromFirestoreCart,
                     clearFirestoreCart,
-                    changeQuantityFirestoreCart
+                    changeQuantityFirestoreCart,
+                    count
                 }}>
                 <HashRouter>
                     <Header />

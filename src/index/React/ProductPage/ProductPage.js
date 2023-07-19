@@ -48,7 +48,6 @@ function ProductPage (props) {
 
     async function setPrintifyObj (id) {
         let results = await getPrintifyProductObj(id);
-        console.log(results);
         setProductData(results);
         setProductImg(<img className='productImg' src={results.images[0].src} />);
     }
