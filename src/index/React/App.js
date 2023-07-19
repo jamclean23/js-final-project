@@ -59,12 +59,27 @@ function App () {
 
         function handleUserSignIn () {
             setSignedIn(true);
+            combineCarts();
             updateUserData();
         }
 
         function handleUserSignOut () {
             setSignedIn(false);
         }
+    }
+
+    function combineCarts () {
+        console.log('Combining carts');
+        
+        const cart = JSON.parse(localStorage.getItem('cart'));
+
+        if (cart) {   
+            cart.forEach(async (item) => {
+                await addToFirestoreCart(item.itemId, item.quantity);
+            });
+        }
+
+        clearLocalCart();
     }
 
     function addToLocalCart (itemId, quantity = 1) {
@@ -189,12 +204,14 @@ function App () {
         return new Promise(async (resolve, reject) => {
 
             const docSnap = await getDoc(doc(firestoreDb, 'user-data', getAuth().currentUser.uid));
+
             if (!docSnap.exists()) {
+                // If user has not signed in before, create new firestore doc
                 console.log('Document not found, creating...');
                 setDoc(doc(firestoreDb, 'user-data', getAuth().currentUser.uid), {});
                 setUserData({});
             } else {
-                
+                // If user has existing doc, retrieve addresses
                 const addressesSnapshot = await getDocs(collection(firestoreDb, 'user-data', getAuth().currentUser.uid, 'addresses'));
                 let addresses = [];
                 
@@ -208,6 +225,9 @@ function App () {
                     addresses: addresses
                 });
             }
+
+            
+
             resolve();
         });
     }
