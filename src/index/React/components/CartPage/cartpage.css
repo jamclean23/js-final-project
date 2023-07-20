@@ -1,0 +1,67 @@
+/* Stylesheet for CartPage */
+
+.cartPageWrapper {
+    display: flex;
+    width: 100%;
+}
+
+.cartContentsDiv {
+    flex-basis: 70%;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    gap: 1rem;
+}
+
+.cartPageItem {
+    height: 20rem;
+    border: 1px solid lightgrey;
+    overflow: hidden;
+    width: 100%;
+    background-color: white;
+    display: flex;
+    padding: 2rem 0;
+    position: relative;
+}
+
+.cartPageItem img {
+    height: 100%;
+    object-fit: contain;
+}
+
+.cartPageItem button {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+}
+
+.cartPageItem select {
+    width: 4rem;
+    text-align: center;
+}
+
+.productInfoWrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.checkoutSidebar {
+    flex-basis: 30%;
+    padding: 2rem;
+}
+
+.stickyCheckoutMenu {
+    top: 2rem;
+    position: sticky;
+    width: 100%;
+    height: 20rem;
+    background-color: white;
+    border: 1px solid lightgray;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}

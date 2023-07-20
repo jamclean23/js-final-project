@@ -290,19 +290,22 @@ function App () {
     }
 
     async function getFirestoreCartArray () {
-        let cart = await getDocs(collection(firestoreDb, 'user-data', getAuth().currentUser.uid, 'cart'));
+        return new Promise(async (resolve, reject) => {
 
-        if (cart.empty) {
-            return [];
-        }
-
-        let cartArray =[];
-
-        cart.forEach((item) => {
-            cartArray.push(item.data());
+            let cart = await getDocs(collection(firestoreDb, 'user-data', getAuth().currentUser.uid, 'cart'));
+            
+            if (cart.empty) {
+                return [];
+            }
+            
+            let cartArray =[];
+            
+            cart.forEach((item) => {
+                cartArray.push(item.data());
+            });
+            
+            resolve(cartArray);
         });
-
-        return cartArray;
     }
 
     function goToHashUrl (routeName) {

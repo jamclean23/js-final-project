@@ -14,6 +14,7 @@ import './cartpage.css';
 
 // Functions
 import uniqid from 'uniqid';
+import getPrintifyProductObj from '../../../../functions/getPrintifyProductObj';
 
 // ====== COMPONENT ======
 
@@ -50,17 +51,33 @@ function CartPage () {
             cartItemsArray = AppLevel.getLocalCartArray();
         }
 
+        console.log('cartItemsArray', cartItemsArray);
+
         let cartItemsJsx = [];
-        cartItemsArray.forEach((item) => {
+
+        for (const item of cartItemsArray) {
+            const productInfo = await getPrintifyProductObj(item.itemId);
+            console.log(productInfo);
             cartItemsJsx.push(
                 <div key={uniqid()} className='cartPageItem'>
-                    <p>Item</p>
-                    <p>{item.itemId}</p>                    
-                    <p>{item.quantity}</p>
+                    <button className='xBtn'>X</button>
+                    <img src={productInfo.images[0].src} />
+                    <div className='productInfoWrapper'>
+                        <p className='title'>{productInfo.title}</p>
+                        <select defaultValue={item.quantity}>
+                            {(()=>{
+                                let jsxArray = [];
+                                for (let i = 1; i <= 100; i++) {
+                                    jsxArray.push(<option key={uniqid()} value={i}>{i}</option>);
+                                }
+                                return jsxArray;
+                            })()}
+                        </select>
+                    </div>
                 </div>);
-        });
+        }
 
-        console.log('CartItems:', cartItemsJsx);
+        console.log('CartItemsJSX:', cartItemsJsx);
 
         setCartItems(cartItemsJsx);
     }
@@ -70,11 +87,17 @@ function CartPage () {
     return (
         <div className='CartPage'>
             <div className='cartPageWrapper'>
-                <div className='cartContententsDiv'>
+                <div className='cartContentsDiv'>
                     {cartItems}
                 </div>
                 <div className='checkoutSidebar'>
-
+                    <div className='stickyCheckoutMenu'>
+                        <div className='subtotalWrapper'>
+                            <p>Checkout goes here</p>
+                            <p>Subtotal: <span>subtotal goes here</span></p>
+                        </div>
+                        <button>Checkout</button>
+                    </div>
                 </div>
 
             </div>
