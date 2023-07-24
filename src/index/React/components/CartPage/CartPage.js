@@ -41,13 +41,21 @@ function CartPage () {
     // FUNCTIONS
 
     async function buildCartItems () {
+        console.log('Building cart');
         let cartItemsArray = [];
 
         if (getAuth().currentUser) {
-            cartItemsArray = await AppLevel.getFirestoreCartArray();
+            try {
+                cartItemsArray = await AppLevel.getFirestoreCartArray();
+            } catch (error) {
+                console.log(error);
+            }
         } else {
             cartItemsArray = AppLevel.getLocalCartArray();
         }
+
+        console.log('CART ARRAY:');
+        console.log(cartItemsArray);
 
         let cartItemsJsx = [];
 
@@ -56,7 +64,7 @@ function CartPage () {
 
             cartItemsJsx.push(
                 <div key={uniqid()} className='cartPageItem'>
-                    <button className='xBtn'>X</button>
+                    <button onClick={handleXBtnClick.bind(this, item.itemId)} className='xBtn'>X</button>
                     <img src={productInfo.images[0].src} />
                     <div className='productInfoWrapper'>
                         <p className='title'>{productInfo.title}</p>
@@ -76,11 +84,26 @@ function CartPage () {
         setCartItems(cartItemsJsx);
     }
 
+    async function handleXBtnClick (itemId) {
+        if (getAuth().currentUser) {
+            try {
+                await AppLevel.removeFromFirestoreCart(itemId);
+            } catch (error) {
+                console.log(error);
+            }
+            console.log('removed items');
+            buildCartItems();
+        } else {
+            AppLevel.removeFromLocalCart(itemId);
+            buildCartItems();
+        }
+    }
+
     async function handleSelectChange (itemId, event) {
         if (getAuth().currentUser) {
             await AppLevel.changeQuantityFirestoreCart(itemId, event.target.value);
             buildCartItems();
-            
+
         } else {
             AppLevel.changeQuantityLocalCart(itemId, event.target.value);
             buildCartItems();

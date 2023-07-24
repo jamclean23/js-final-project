@@ -203,20 +203,29 @@ function App () {
     }
 
     async function removeFromFirestoreCart (itemId) {
-        const docRef = doc(firestoreDb, "user-data", getAuth().currentUser.uid, "cart", itemId);
+        return new Promise(async (resolve, reject) => {
 
-        await deleteDoc(docRef);
-        updateCartBtn();
+            const docRef = doc(firestoreDb, "user-data", getAuth().currentUser.uid, "cart", itemId);
+            
+            await deleteDoc(docRef);
+            resolve()
+
+            updateCartBtn();
+        });
     }
 
-    async function clearFirestoreCart () {
-        const querySnap = await getDocs(collection(firestoreDb, 'user-data', getAuth().currentUser.uid, 'cart'));
+    function clearFirestoreCart () {
+        return new Promise(async (resolve, reject) => {
 
-        querySnap.forEach(async (currentDoc) => {
-            await deleteDoc(doc(firestoreDb, "user-data", getAuth().currentUser.uid, "cart", currentDoc.id));
+            const querySnap = await getDocs(collection(firestoreDb, 'user-data', getAuth().currentUser.uid, 'cart'));
+            
+            querySnap.forEach(async (currentDoc) => {
+                await deleteDoc(doc(firestoreDb, "user-data", getAuth().currentUser.uid, "cart", currentDoc.id));
+            });
+            
+            updateCartBtn();
+            resolve();
         });
-
-        updateCartBtn();
     }
 
     function changeQuantityFirestoreCart (itemId, newQuantity) {
@@ -296,11 +305,16 @@ function App () {
 
     async function getFirestoreCartArray () {
         return new Promise(async (resolve, reject) => {
-
-            let cart = await getDocs(collection(firestoreDb, 'user-data', getAuth().currentUser.uid, 'cart'));
+            
+            let cart; 
+            try {
+                cart = await getDocs(collection(firestoreDb, 'user-data', getAuth().currentUser.uid, 'cart'));
+            } catch (error) {
+                console.log(error);
+            }
             
             if (cart.empty) {
-                return [];
+                reject();
             }
             
             let cartArray =[];
