@@ -219,19 +219,24 @@ function App () {
         updateCartBtn();
     }
 
-    async function changeQuantityFirestoreCart (itemId, newQuantity) {
-        const docRef = doc(firestoreDb, "user-data", getAuth().currentUser.uid, "cart", itemId);
-        const querySnap = await getDoc(docRef);
+    function changeQuantityFirestoreCart (itemId, newQuantity) {
+        return new Promise(async (resolve, reject) => {
 
-        if (querySnap.empty) {
-            return;
-        }
+            const docRef = doc(firestoreDb, "user-data", getAuth().currentUser.uid, "cart", itemId);
+            const querySnap = await getDoc(docRef);
+            
+            if (querySnap.empty) {
+                resolve();
+            }
+            
+            await updateDoc(docRef, {
+                quantity: newQuantity
+            })
 
-        await updateDoc(docRef, {
-            quantity: newQuantity
-        })
-
-        updateCartBtn();
+            updateCartBtn();
+            resolve();
+            
+        });
     }
 
     function updateUserData () {
