@@ -29,7 +29,7 @@ import HomeContent from './components/HomeContent/HomeContent';
 import TestComponent from './components/TestComponent/TestComponent';
 import ProductPage from './components/ProductPage/ProductPage';
 import CartPage from './components/CartPage/CartPage';
-
+import SearchPage from './components/SearchPage/SearchPage';
 // ====== FUNCTIONS ======
 
 // Main app function 
@@ -363,6 +363,7 @@ function App () {
                         <Route path='/test' element={<TestComponent/>}/>
                         <Route path='product/:id' element={<ProductPage/>} />
                         <Route path='cart' element={<CartPage/>} />
+                        <Route path='results/:keyword' element={<SearchPage/>}/>
                     </Routes>
                 </HashRouter>
             </appContext.Provider>

@@ -2,12 +2,20 @@
 
 // ====== IMPORTS ======
 
-import React, {useEffect, useState} from "react";
+// React
+import React, {useContext, useEffect, useState} from "react";
+
+// Css
 import './searchbar.css';
 
 // Images
-
 import searchImg from '../../../../../../assets/icons/search.png';
+
+// Functions
+import getSearchResults from '../../../../../../functions/getSearchResults.js';
+
+// Context
+import { appContext } from "../../../../App";
 
 // ====== COMPONENT ======
 
@@ -15,7 +23,9 @@ function SearchBar (props) {
 
     // VARIABLES
 
+    const AppLevel = useContext(appContext);
     const [selectedCat, setSelectedCat] = useState('All');
+    const [searchBarContent, setSearchBarContent] = useState('');
 
     // LISTENERS
 
@@ -44,15 +54,25 @@ function SearchBar (props) {
         setSelectedCat(event.target.value);
     }
 
+    async function handleSearchClick () {
+        AppLevel.goToHashUrl('results/' + searchBarContent);
+    }
+
+    function handleSearchBarOnChange (event) {
+        setSearchBarContent(event.target.value)
+    }
+
+    // RENDER
+
     return (
         <div className="SearchBar">
             <select defaultValue={selectedCat} id='searchBarCats' onClick={handleCatsClick}>
                 <option value='All'>All</option>
                 <option value='A really long option'>A really long option</option>
             </select>
-            <input className='searchInput' type='text'/>
+            <input className='searchInput' type='text' value={searchBarContent} onChange={handleSearchBarOnChange}/>
             <div className='searchBarOutline'></div>
-            <a className='searchBtn'><img className='searchIcon' src={searchImg} alt='searchImg'/></a>
+            <a onClick={handleSearchClick} className='searchBtn'><img className='searchIcon' src={searchImg} alt='searchImg'/></a>
         </div>
     );
 }

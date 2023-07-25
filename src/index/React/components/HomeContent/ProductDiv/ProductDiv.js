@@ -3,28 +3,27 @@
 // ====== IMPORTS =======
 
 // React
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 
 // Css
 import './productdiv.css';
 
+// Context
+import { appContext } from "../../../App";
 
 // ====== COMPONENT ======
 
 function ProductDiv (props) {
+    // VARIABLES
+
+    const AppLevel = useContext(appContext);
 
     // LISTENERS
 
     // FUNCTIONS
 
     function handleProductDivClick () {
-        let currentLocation = window.location.href.split('#');
-
-        if (currentLocation[1]) {
-            window.location.href = window.location.href + 'product/' + props.productData.id;
-        } else {
-            window.location.href = window.location.href + '#/product/' + props.productData.id;
-        }
+        AppLevel.goToHashUrl('product/' + props.productData.id);
     }
 
     // RENDER

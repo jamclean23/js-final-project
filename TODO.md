@@ -1,5 +1,4 @@
-CART PAGE
-- Add routing for cart url
-- Add folder for component and css
-- Write component
-- Style component
+Search bar functionality
+function 
+Categories functionality
+- function for retrieving products by category
