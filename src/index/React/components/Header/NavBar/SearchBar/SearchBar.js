@@ -68,7 +68,6 @@ function SearchBar (props) {
         <div className="SearchBar">
             <select defaultValue={selectedCat} id='searchBarCats' onClick={handleCatsClick}>
                 <option value='All'>All</option>
-                <option value='A really long option'>A really long option</option>
             </select>
             <input className='searchInput' type='text' value={searchBarContent} onChange={handleSearchBarOnChange}/>
             <div className='searchBarOutline'></div>

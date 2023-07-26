@@ -364,6 +364,7 @@ function App () {
                         <Route path='product/:id' element={<ProductPage/>} />
                         <Route path='cart' element={<CartPage/>} />
                         <Route path='results/:keyword' element={<SearchPage/>}/>
+                        <Route path='category/:keyword' element={<SearchPage/>}/>
                     </Routes>
                 </HashRouter>
             </appContext.Provider>

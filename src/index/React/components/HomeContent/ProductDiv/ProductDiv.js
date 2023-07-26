@@ -31,6 +31,7 @@ function ProductDiv (props) {
     return (
         <div onClick={handleProductDivClick} className='ProductDiv'>
             <img src={props.productData.images[0].src} />
+            <p className='prodTitle'>{props.productData.title}</p>
         </div>
     );
 }

@@ -139,6 +139,7 @@ function CartPage () {
     
     return (
         <div className='CartPage'>
+            <h2>Your Cart</h2>
             <div className='cartPageWrapper'>
                 <div className='cartContentsDiv'>
                     {cartItems}

@@ -13,6 +13,9 @@ import getSearchResults from "../../../../functions/getSearchResults";
 // Components
 import ProductDiv from "../HomeContent/ProductDiv/ProductDiv";
 
+// Functions
+import uniqid from 'uniqid';
+
 
 // ====== COMPONENT ======
 
@@ -49,7 +52,7 @@ function SearchPage (props) {
 
         searchResults.forEach((item) => {
             productsArrayJsx.push(
-                <ProductDiv productData={item}/>
+                <ProductDiv key={uniqid()} productData={item}/>
             );
         });
 
@@ -60,7 +63,10 @@ function SearchPage (props) {
     // RENDER
     return (
         <div className='SearchPage'>
-            {resultsJsx}
+            <h2>Results for "{keyword}"</h2>
+            <div className='resultsDiv'>
+                {resultsJsx}
+            </div>
         </div>  
     );
 }

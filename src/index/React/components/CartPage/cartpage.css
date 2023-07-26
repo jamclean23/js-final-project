@@ -91,3 +91,8 @@
     font-weight: bold;
     font-size: 1.2rem;
 }
+
+.CartPage h2 {
+    text-align: center;
+    padding-top: 2rem;
+}

@@ -60,7 +60,7 @@ function NavBar (props) {
             }
             {signedIn ? <OrdersButton /> : ''}
             <Cart />
-            <span className="navBtn testBtn" onClick={handleTestClick}>test</span>
+            {/* <span className="navBtn testBtn" onClick={handleTestClick}>test</span> */}
         </div>
     );
 }
