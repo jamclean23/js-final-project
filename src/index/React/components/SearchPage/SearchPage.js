@@ -22,7 +22,7 @@ import uniqid from 'uniqid';
 function SearchPage (props) {
     // VARIABLES
     
-    const { keyword } = useParams()
+    const { keyword } = useParams();
     const [searchResults, setSearchResults] = useState([]);
     const [resultsJsx, setResultsJsx] = useState([]);
 
@@ -34,16 +34,17 @@ function SearchPage (props) {
     }, [keyword]);
 
     useEffect(() => {
-        if (searchResults.length > 0) {
-            buildProductsJsx();
-        }
+        // if (searchResults.length > 0) {
+        //     buildProductsJsx();
+        // }
+        buildProductsJsx();
     }, [searchResults]);
 
 
     // FUNCTIONS
 
     async function handleMount() {
-        let results = await getSearchResults(keyword || '');
+        let results = await getSearchResults(keyword || []);
         setSearchResults(results);
     }
 

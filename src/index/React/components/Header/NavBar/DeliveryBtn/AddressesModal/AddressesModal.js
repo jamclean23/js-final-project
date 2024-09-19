@@ -198,7 +198,12 @@ function AddressesModal (props) {
     async function handleAddAddressSubmitBtnClick () {
 
         // Upload information to firestore
-        await addDoc(collection(firestoreDb, 'user-data', getAuth().currentUser.uid, 'addresses'), addressFormInfo);
+        try {
+            console.log('Adding address');
+            await addDoc(collection(firestoreDb, 'user-data', getAuth().currentUser.uid, 'addresses'), addressFormInfo);
+        } catch (err) {
+            console.log(err);
+        }
 
         // Sync userdata with firestore
         updateUserData();
@@ -218,7 +223,7 @@ function AddressesModal (props) {
                     <div className='addressesList'>
                         {addresses.length
                             ? addresses
-                            : <span className='addressesLoading'>Loading...</span>
+                            : <span className='addressesLoading'>No known addresses</span>
                         }
                     </div>
                     <div className='addressesBtnsWrapper'>

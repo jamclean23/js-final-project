@@ -20,6 +20,11 @@ function ProductDiv (props) {
 
     // LISTENERS
 
+    useEffect(() => {
+        console.log('PRODUCT DATA');
+        console.log(props.productData.images);
+    }, []);
+
     // FUNCTIONS
 
     function handleProductDivClick () {
@@ -30,7 +35,11 @@ function ProductDiv (props) {
 
     return (
         <div onClick={handleProductDivClick} className='ProductDiv'>
-            <img src={props.productData.images[0].src} />
+            {(() => {
+                if (props.productData.images.length) {
+                    return <img src={props.productData.images[0].src} />
+                }
+            })()}
             <p className='prodTitle'>{props.productData.title}</p>
         </div>
     );

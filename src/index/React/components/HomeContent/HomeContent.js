@@ -49,6 +49,7 @@ function HomeContent (props) {
         let productsJsxArray = [];
 
         printifyObj.data.forEach((product) => {
+            console.log(product);
             productsJsxArray.push(<ProductDiv productData={product} key={uniqid()}/>);
         });
 
