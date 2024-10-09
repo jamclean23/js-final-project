@@ -6,5 +6,6 @@
     <li>Integration of Printify Api via a proxy server for product management</li>
     <li>React</li>
     <li>Javascript/HTML/CSS</li>
+    <li>Webpack</li>
   </ul>
 </p>
